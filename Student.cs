@@ -128,37 +128,64 @@ namespace StudentList
 
             try
             {
-                string sql = "UPDATE Students SET name=@name, fathername=@fathername, dob=@dob, nrc=@nrc, gender=@gender, class=@class, remark=@remark, photo=@image WHERE id=@id";
-                SqlCommand cmd = new SqlCommand(sql, conn);
                 DateTime datetime = DateTime.Now;
-                cmd.Parameters.AddWithValue("@name", st.StudentName);
-                cmd.Parameters.AddWithValue("@fathername", st.StudentFather);
-                cmd.Parameters.AddWithValue("@dob", st.StudentBOD);
-                cmd.Parameters.AddWithValue("@nrc", st.StudentNRC);
-                cmd.Parameters.AddWithValue("@gender", st.StudentGender);
-                cmd.Parameters.AddWithValue("@class", st.StudentClass);
-                cmd.Parameters.AddWithValue("@remark", st.StudentRemark);
-                cmd.Parameters.AddWithValue("@created_at", datetime);
-                cmd.Parameters.AddWithValue("@id", st.StudentId);
-
-                byte[] image = null;
-                FileStream strem = new FileStream(StudentImage, FileMode.Open, FileAccess.Read);
-                BinaryReader brs = new BinaryReader(strem);
-                image = brs.ReadBytes((int)strem.Length);
-                cmd.Parameters.AddWithValue("@image", image);
-
-
-                conn.Open();
-                int rows = cmd.ExecuteNonQuery();
-                if (rows > 0)
+                if (String.IsNullOrEmpty(st.StudentImage))
                 {
-                    isSuccess = true;
+                    string sql = "UPDATE Students SET name=@name, fathername=@fathername, dob=@dob, nrc=@nrc, gender=@gender, class=@class, remark=@remark WHERE id=@id";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@name", st.StudentName);
+                    cmd.Parameters.AddWithValue("@fathername", st.StudentFather);
+                    cmd.Parameters.AddWithValue("@dob", st.StudentBOD);
+                    cmd.Parameters.AddWithValue("@nrc", st.StudentNRC);
+                    cmd.Parameters.AddWithValue("@gender", st.StudentGender);
+                    cmd.Parameters.AddWithValue("@class", st.StudentClass);
+                    cmd.Parameters.AddWithValue("@remark", st.StudentRemark);
+                    cmd.Parameters.AddWithValue("@created_at", datetime);
+                    cmd.Parameters.AddWithValue("@id", st.StudentId);
+
+                    conn.Open();
+                    int rows = cmd.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        isSuccess = true;
+                    }
+                    else
+                    {
+                        isSuccess = false;
+                    }
+
                 }
                 else
                 {
-                    isSuccess = false;
-                }
+                    string sql = "UPDATE Students SET name=@name, fathername=@fathername, dob=@dob, nrc=@nrc, gender=@gender, class=@class, remark=@remark, photo=@image WHERE id=@id";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    byte[] image = null;
+                    FileStream strem = new FileStream(StudentImage, FileMode.Open, FileAccess.Read);
+                    BinaryReader brs = new BinaryReader(strem);
+                    image = brs.ReadBytes((int)strem.Length);
+                    cmd.Parameters.AddWithValue("@image", image);
 
+                    cmd.Parameters.AddWithValue("@name", st.StudentName);
+                    cmd.Parameters.AddWithValue("@fathername", st.StudentFather);
+                    cmd.Parameters.AddWithValue("@dob", st.StudentBOD);
+                    cmd.Parameters.AddWithValue("@nrc", st.StudentNRC);
+                    cmd.Parameters.AddWithValue("@gender", st.StudentGender);
+                    cmd.Parameters.AddWithValue("@class", st.StudentClass);
+                    cmd.Parameters.AddWithValue("@remark", st.StudentRemark);
+                    cmd.Parameters.AddWithValue("@created_at", datetime);
+                    cmd.Parameters.AddWithValue("@id", st.StudentId);
+
+                    conn.Open();
+                    int rows = cmd.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        isSuccess = true;
+                    }
+                    else
+                    {
+                        isSuccess = false;
+                    }
+                }
 
             }
             catch(Exception ex)

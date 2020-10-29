@@ -78,7 +78,7 @@ namespace StudentList
            
                 cmd.Parameters.AddWithValue("@name", st.StudentName);
                 cmd.Parameters.AddWithValue("@fathername", st.StudentFather);
-                cmd.Parameters.AddWithValue("@dob", datetime);
+                cmd.Parameters.AddWithValue("@dob", st.StudentBOD);
                 cmd.Parameters.AddWithValue("@nrc", st.StudentNRC);
                 cmd.Parameters.AddWithValue("@gender", st.StudentGender);
                 cmd.Parameters.AddWithValue("@class", st.StudentClass);
@@ -133,7 +133,7 @@ namespace StudentList
                 DateTime datetime = DateTime.Now;
                 cmd.Parameters.AddWithValue("@name", st.StudentName);
                 cmd.Parameters.AddWithValue("@fathername", st.StudentFather);
-                cmd.Parameters.AddWithValue("@dob", datetime);
+                cmd.Parameters.AddWithValue("@dob", st.StudentBOD);
                 cmd.Parameters.AddWithValue("@nrc", st.StudentNRC);
                 cmd.Parameters.AddWithValue("@gender", st.StudentGender);
                 cmd.Parameters.AddWithValue("@class", st.StudentClass);

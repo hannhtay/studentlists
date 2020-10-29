@@ -59,6 +59,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.studentsDBDataSet = new StudentList.StudentsDBDataSet();
+            this.studentsDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,8 +69,7 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gimage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.studentsDBDataSet = new StudentList.StudentsDBDataSet();
-            this.studentsDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dobstudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -106,7 +107,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(472, 830);
+            this.panel2.Size = new System.Drawing.Size(472, 802);
             this.panel2.TabIndex = 1;
             // 
             // imglabel
@@ -418,7 +419,8 @@
             this.Column4,
             this.Column5,
             this.Remark,
-            this.gimage});
+            this.gimage,
+            this.dobstudent});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Himalaya", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -437,6 +439,16 @@
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
+            // 
+            // studentsDBDataSet
+            // 
+            this.studentsDBDataSet.DataSetName = "StudentsDBDataSet";
+            this.studentsDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // studentsDBDataSetBindingSource
+            // 
+            this.studentsDBDataSetBindingSource.DataSource = this.studentsDBDataSet;
+            this.studentsDBDataSetBindingSource.Position = 0;
             // 
             // Column1
             // 
@@ -493,21 +505,18 @@
             this.gimage.Name = "gimage";
             this.gimage.Visible = false;
             // 
-            // studentsDBDataSet
+            // dobstudent
             // 
-            this.studentsDBDataSet.DataSetName = "StudentsDBDataSet";
-            this.studentsDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // studentsDBDataSetBindingSource
-            // 
-            this.studentsDBDataSetBindingSource.DataSource = this.studentsDBDataSet;
-            this.studentsDBDataSetBindingSource.Position = 0;
+            this.dobstudent.DataPropertyName = "dob";
+            this.dobstudent.HeaderText = "DOB";
+            this.dobstudent.Name = "dobstudent";
+            this.dobstudent.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(4F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1372, 830);
+            this.ClientSize = new System.Drawing.Size(1372, 802);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.label6);
@@ -571,6 +580,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Remark;
         private System.Windows.Forms.DataGridViewTextBoxColumn gimage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dobstudent;
     }
 }
 

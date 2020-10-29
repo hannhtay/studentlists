@@ -46,7 +46,7 @@ namespace StudentList
         {
             st.StudentName = studentname.Text;
             st.StudentFather= studentfname.Text;
-            st.StudentBOD= studentdob.Text;
+            st.StudentBOD= studentdob.Value.ToString();
             st.StudentNRC= studentnrc.Text;
             st.StudentClass=studentClass.Text;
             st.StudentRemark= studentremark.Text;
@@ -98,10 +98,6 @@ namespace StudentList
         {
 
         }
-        private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellEventArgs e)
-        {
-            Console.WriteLine("hello world");
-        }
 
 
         Image ConvertBinaryToImage(byte[] imdata)
@@ -120,6 +116,7 @@ namespace StudentList
             studentfname.Text = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
             studentnrc.Text = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString();
             studentClass.Text = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString();
+            studentdob.Value = Convert.ToDateTime(dataGridView1.Rows[rowIndex].Cells[8].Value.ToString());
             string gender = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
             if (Int32.Parse(gender)== 1)
             {
@@ -150,7 +147,8 @@ namespace StudentList
         {
             st.StudentName = studentname.Text;
             st.StudentFather = studentfname.Text;
-            st.StudentBOD = studentdob.Text;
+            st.StudentBOD = studentdob.Value.ToString();
+            Console.WriteLine(st.StudentBOD);
             st.StudentNRC = studentnrc.Text;
             st.StudentClass = studentClass.Text;
             st.StudentRemark = studentremark.Text;

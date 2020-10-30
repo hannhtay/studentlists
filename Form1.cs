@@ -44,34 +44,41 @@ namespace StudentList
         //Save to database
         private void save_Click(object sender, EventArgs e)
         {
-            st.StudentName = studentname.Text;
-            st.StudentFather= studentfname.Text;
-            st.StudentBOD= studentdob.Value.ToString();
-            st.StudentNRC= studentnrc.Text;
-            st.StudentClass=studentClass.Text;
-            st.StudentRemark= studentremark.Text;
-            st.StudentImage = imglocation;
-            Console.WriteLine(imglocation);
-            if (male.Checked == true)
+            if (isValidate())
             {
-                 st.StudentGender = 1;
-            }
-            else
-            {
-                 st.StudentGender = 0;
-            }
+                st.StudentName = studentname.Text;
+                st.StudentFather = studentfname.Text;
+                st.StudentBOD = studentdob.Value.ToString();
+                st.StudentNRC = studentnrc.Text;
+                st.StudentClass = studentClass.Text;
+                st.StudentRemark = studentremark.Text;
+                st.StudentImage = imglocation;
+                Console.WriteLine(imglocation);
+                if (male.Checked == true)
+                {
+                    st.StudentGender = 1;
+                }
+                else
+                {
+                    st.StudentGender = 0;
+                }
 
-            bool success = st.Insert(st);
-            if (success == true)
-            {
-                MessageBox.Show("ကျောင်းသားထည့်ပြီးပါယာ", "အောင်မြင်ပါရေ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                dataGridView1.ClearSelection();
-                showdata();
-                Clear();
+                bool success = st.Insert(st);
+                if (success == true)
+                {
+                    MessageBox.Show("ကျောင်းသားထည့်ပြီးပါယာ", "အောင်မြင်ပါရေ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dataGridView1.ClearSelection();
+                    showdata();
+                    Clear();
+                }
+                else
+                {
+                    MessageBox.Show("Student add Fail");
+                }
             }
             else
             {
-                MessageBox.Show("Student add Fail");
+                MessageBox.Show("Fill all fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -224,6 +231,20 @@ namespace StudentList
 
             }
 
+        }
+
+        //User input validation
+        public bool isValidate()
+        {
+            bool isPassed = false;
+            if ( (!String.IsNullOrEmpty(studentname.Text)) && (!String.IsNullOrEmpty(studentfname.Text)) && (!String.IsNullOrEmpty(studentnrc.Text)) && (!String.IsNullOrEmpty(studentfname.Text)) && (!String.IsNullOrEmpty(studentClass.Text)) && (!String.IsNullOrEmpty(studentremark.Text)))
+            {
+
+                isPassed = true;
+            }
+
+            return isPassed;
+          
         }
     }
 }

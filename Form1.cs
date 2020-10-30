@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,11 +19,14 @@ namespace StudentList
         Student st = new Student();
         string myconnstring = ConfigurationManager.ConnectionStrings["connstring"].ConnectionString;
         string imglocation = "";
+        Bitmap default_image;
+        
 
         public Form1()
         {
             InitializeComponent();
             showdata();
+            default_image = new Bitmap(pictureBox1.Image);
         }
 
         public void showdata()
@@ -92,8 +96,10 @@ namespace StudentList
             studentnrc.Text = "";
             studentClass.Text = "";
             studentremark.Text = "";
+            studentid.Text = "";
             male.Checked = true;
             imglabel.Text = "?";
+            pictureBox1.Image = default_image;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -152,46 +158,30 @@ namespace StudentList
 
         private void button1_Click(object sender, EventArgs e)
         {
-            st.StudentName = studentname.Text;
-            st.StudentFather = studentfname.Text;
-            st.StudentBOD = studentdob.Value.ToString();
-            Console.WriteLine(st.StudentBOD);
-            st.StudentNRC = studentnrc.Text;
-            st.StudentClass = studentClass.Text;
-            st.StudentRemark = studentremark.Text;
-            st.StudentId = Int32.Parse(studentid.Text);
-            st.StudentImage = imglocation;
-            if (male.Checked == true)
+            if (isValidate())
             {
-                st.StudentGender = 1;
-            }
-            else
-            {
-                st.StudentGender = 0;
-            }
-
-            bool success = st.Update(st);
-            if (success == true)
-            {
-                MessageBox.Show("ကျောင်းသားထည့်ပြီးပါယာ", "အောင်မြင်ပါရေ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                dataGridView1.ClearSelection();
-                showdata();
-                Clear();
-            }
-            else
-            {
-                MessageBox.Show("Student add Fail");
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if(DialogResult.Yes==MessageBox.Show("Are you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-            {
+                st.StudentName = studentname.Text;
+                st.StudentFather = studentfname.Text;
+                st.StudentBOD = studentdob.Value.ToString();
+                Console.WriteLine(st.StudentBOD);
+                st.StudentNRC = studentnrc.Text;
+                st.StudentClass = studentClass.Text;
+                st.StudentRemark = studentremark.Text;
                 st.StudentId = Int32.Parse(studentid.Text);
-                bool success = st.destroy(st);
+                st.StudentImage = imglocation;
+                if (male.Checked == true)
+                {
+                    st.StudentGender = 1;
+                }
+                else
+                {
+                    st.StudentGender = 0;
+                }
+
+                bool success = st.Update(st);
                 if (success == true)
                 {
+                    MessageBox.Show("ကျောင်းသားထည့်ပြီးပါယာ", "အောင်မြင်ပါရေ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dataGridView1.ClearSelection();
                     showdata();
                     Clear();
@@ -200,6 +190,36 @@ namespace StudentList
                 {
                     MessageBox.Show("Student add Fail");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Fill all fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(studentid.Text))
+            {
+                if (DialogResult.Yes == MessageBox.Show("Are you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
+                    st.StudentId = Int32.Parse(studentid.Text);
+                    bool success = st.destroy(st);
+                    if (success == true)
+                    {
+                        dataGridView1.ClearSelection();
+                        showdata();
+                        Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Student add Fail");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Student no found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             

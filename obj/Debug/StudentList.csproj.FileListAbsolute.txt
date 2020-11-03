@@ -1,12 +1,12 @@
+D:\Visual Studio\StudentList\obj\Debug\StudentList.Form1.resources
+D:\Visual Studio\StudentList\obj\Debug\StudentList.Properties.Resources.resources
+D:\Visual Studio\StudentList\obj\Debug\StudentList.csproj.GenerateResource.cache
+D:\Visual Studio\StudentList\obj\Debug\StudentList.csproj.CoreCompileInputs.cache
 D:\Visual Studio\StudentList\bin\Debug\StudentsDB.mdf
 D:\Visual Studio\StudentList\bin\Debug\StudentsDB_log.ldf
 D:\Visual Studio\StudentList\bin\Debug\StudentList.exe.config
 D:\Visual Studio\StudentList\bin\Debug\StudentList.exe
 D:\Visual Studio\StudentList\bin\Debug\StudentList.pdb
-D:\Visual Studio\StudentList\obj\Debug\StudentList.Form1.resources
-D:\Visual Studio\StudentList\obj\Debug\StudentList.Properties.Resources.resources
-D:\Visual Studio\StudentList\obj\Debug\StudentList.csproj.GenerateResource.cache
-D:\Visual Studio\StudentList\obj\Debug\StudentList.csproj.CoreCompileInputs.cache
 D:\Visual Studio\StudentList\obj\Debug\StudentList.exe
 D:\Visual Studio\StudentList\obj\Debug\StudentList.pdb
 D:\Visual Studio\StudentList\obj\Debug\StudentList.csprojAssemblyReference.cache

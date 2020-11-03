@@ -20,6 +20,11 @@ namespace StudentList
         string myconnstring = ConfigurationManager.ConnectionStrings["connstring"].ConnectionString;
         string imglocation = "";
         Bitmap default_image;
+
+        //Page size for pagination
+        private int pageSize = 10;
+        private int currentPageIndex = 1;
+        private int totalPage = 0;
         
 
         public Form1()
@@ -27,11 +32,22 @@ namespace StudentList
             InitializeComponent();
             showdata();
             default_image = new Bitmap(pictureBox1.Image);
+            CalculateTotalPages();
+            //Disable if no need nex and previous button
+            if (currentPageIndex == 1)
+            {
+                prevButton.Enabled = false;
+            }
+            if (totalPage == 1)
+            {
+                nextButton.Enabled = false;
+            }
+            pageCount.Text = totalPage.ToString();
         }
 
         public void showdata()
         {
-            DataTable dt = st.Students();
+            DataTable dt = st.Students(pageSize, currentPageIndex);
             dataGridView1.Font = new Font("Pyidaungsu", 11);
             dataGridView1.AutoGenerateColumns = false;
             
@@ -60,11 +76,11 @@ namespace StudentList
                 Console.WriteLine(imglocation);
                 if (male.Checked == true)
                 {
-                    st.StudentGender = 1;
+                    st.StudentGender = "ကျား";
                 }
                 else
                 {
-                    st.StudentGender = 0;
+                    st.StudentGender = "မ";
                 }
 
                 bool success = st.Insert(st);
@@ -131,7 +147,7 @@ namespace StudentList
             studentClass.Text = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString();
             studentdob.Value = Convert.ToDateTime(dataGridView1.Rows[rowIndex].Cells[8].Value.ToString());
             string gender = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
-            if (Int32.Parse(gender)== 1)
+            if (gender == "ကျား")
             {
                 male.Checked = true;
             }
@@ -171,11 +187,11 @@ namespace StudentList
                 st.StudentImage = imglocation;
                 if (male.Checked == true)
                 {
-                    st.StudentGender = 1;
+                    st.StudentGender = "ကျား";
                 }
                 else
                 {
-                    st.StudentGender = 0;
+                    st.StudentGender = "မ";
                 }
 
                 bool success = st.Update(st);
@@ -229,11 +245,18 @@ namespace StudentList
         {
             
             string keyword =textBox6.Text;
-            SqlConnection conn = new SqlConnection(myconnstring);
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM Students WHERE name LIKE N'%"+keyword +"%' OR fathername LIKE N'%"+keyword+"' OR class LIKE N'%"+keyword+"%' ", conn);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            dataGridView1.DataSource = dt;
+            if (String.IsNullOrEmpty(keyword))
+            {
+                showdata();
+            }
+            else
+            {
+                SqlConnection conn = new SqlConnection(myconnstring);
+                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM Students WHERE name LIKE N'%" + keyword + "%' OR fathername LIKE N'%" + keyword + "' OR class LIKE N'%" + keyword + "%' ", conn);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
 
         }
 
@@ -265,6 +288,83 @@ namespace StudentList
 
             return isPassed;
           
+        }
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex < totalPage)
+            {
+                currentPageIndex++;
+                dataGridView1.ClearSelection();
+                DataTable dt = st.Students(pageSize, currentPageIndex);
+                dataGridView1.Font = new Font("Pyidaungsu", 11);
+                dataGridView1.AutoGenerateColumns = false;
+                dataGridView1.DataSource = dt;
+                if (currentPageIndex > 1)
+                {
+                    prevButton.Enabled = true;
+                }
+                else
+                {
+                    prevButton.Enabled = false;
+                }
+            }
+            currentPage.Text = currentPageIndex.ToString();
+            if (currentPageIndex == totalPage)
+            {
+                nextButton.Enabled = false;
+            }
+
+        }
+
+        //Calculate Total Pages
+        private void CalculateTotalPages()
+        {
+            SqlConnection conn = new SqlConnection(myconnstring);
+            try
+            {
+                conn.Open();
+                SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM Students", conn);
+                Int32 count = (Int32)comm.ExecuteScalar();
+                totalPage = count / pageSize;
+                if(count%pageSize > 0)
+                {
+                    totalPage += 1;
+                }
+                
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void prevButton_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex > 1)
+            {
+                currentPageIndex--;
+                dataGridView1.ClearSelection();
+                DataTable dt = st.Students(pageSize, currentPageIndex);
+                dataGridView1.Font = new Font("Pyidaungsu", 11);
+                dataGridView1.AutoGenerateColumns = false;
+                dataGridView1.DataSource = dt;
+                if (currentPageIndex <= 1)
+                {
+                    prevButton.Enabled = false;
+                }
+                if (currentPageIndex < totalPage)
+                {
+                    nextButton.Enabled = true;
+                }
+                currentPage.Text = currentPageIndex.ToString();
+
+            }
         }
     }
 }

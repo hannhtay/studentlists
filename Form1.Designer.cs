@@ -30,7 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel2 = new System.Windows.Forms.Panel();
             this.imglabel = new System.Windows.Forms.Label();
             this.image = new System.Windows.Forms.Button();
@@ -59,8 +60,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.studentsDBDataSet = new StudentList.StudentsDBDataSet();
-            this.studentsDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +69,13 @@
             this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gimage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dobstudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.studentsDBDataSet = new StudentList.StudentsDBDataSet();
+            this.studentsDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.nextButton = new System.Windows.Forms.Button();
+            this.prevButton = new System.Windows.Forms.Button();
+            this.pageCount = new System.Windows.Forms.Label();
+            this.currentPage = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -107,7 +113,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(472, 802);
+            this.panel2.Size = new System.Drawing.Size(472, 855);
             this.panel2.TabIndex = 1;
             // 
             // imglabel
@@ -421,15 +427,15 @@
             this.Remark,
             this.gimage,
             this.dobstudent});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Himalaya", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Himalaya", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView1.Location = new System.Drawing.Point(484, 182);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(5);
@@ -438,17 +444,8 @@
             this.dataGridView1.Size = new System.Drawing.Size(877, 600);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
-            // 
-            // studentsDBDataSet
-            // 
-            this.studentsDBDataSet.DataSetName = "StudentsDBDataSet";
-            this.studentsDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // studentsDBDataSetBindingSource
-            // 
-            this.studentsDBDataSetBindingSource.DataSource = this.studentsDBDataSet;
-            this.studentsDBDataSetBindingSource.Position = 0;
             // 
             // Column1
             // 
@@ -473,6 +470,8 @@
             // Column6
             // 
             this.Column6.DataPropertyName = "gender";
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Pyidaungsu", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column6.HeaderText = "ကျား/မ";
             this.Column6.Name = "Column6";
             this.Column6.Width = 80;
@@ -512,11 +511,91 @@
             this.dobstudent.Name = "dobstudent";
             this.dobstudent.Visible = false;
             // 
+            // studentsDBDataSet
+            // 
+            this.studentsDBDataSet.DataSetName = "StudentsDBDataSet";
+            this.studentsDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // studentsDBDataSetBindingSource
+            // 
+            this.studentsDBDataSetBindingSource.DataSource = this.studentsDBDataSet;
+            this.studentsDBDataSetBindingSource.Position = 0;
+            // 
+            // nextButton
+            // 
+            this.nextButton.BackColor = System.Drawing.Color.Transparent;
+            this.nextButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.nextButton.FlatAppearance.BorderSize = 0;
+            this.nextButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.nextButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.nextButton.Font = new System.Drawing.Font("Pyidaungsu", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nextButton.ForeColor = System.Drawing.Color.Transparent;
+            this.nextButton.Location = new System.Drawing.Point(1173, 680);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.Size = new System.Drawing.Size(75, 38);
+            this.nextButton.TabIndex = 7;
+            this.nextButton.Text = "Next";
+            this.nextButton.UseVisualStyleBackColor = false;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
+            // prevButton
+            // 
+            this.prevButton.BackColor = System.Drawing.Color.Gray;
+            this.prevButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.prevButton.FlatAppearance.BorderSize = 0;
+            this.prevButton.Font = new System.Drawing.Font("Pyidaungsu", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prevButton.ForeColor = System.Drawing.Color.Transparent;
+            this.prevButton.Location = new System.Drawing.Point(576, 680);
+            this.prevButton.Name = "prevButton";
+            this.prevButton.Size = new System.Drawing.Size(82, 38);
+            this.prevButton.TabIndex = 8;
+            this.prevButton.Text = "Previous";
+            this.prevButton.UseVisualStyleBackColor = false;
+            this.prevButton.Click += new System.EventHandler(this.prevButton_Click);
+            // 
+            // pageCount
+            // 
+            this.pageCount.AutoSize = true;
+            this.pageCount.BackColor = System.Drawing.Color.White;
+            this.pageCount.Font = new System.Drawing.Font("Pyidaungsu", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pageCount.Location = new System.Drawing.Point(951, 688);
+            this.pageCount.Name = "pageCount";
+            this.pageCount.Size = new System.Drawing.Size(16, 24);
+            this.pageCount.TabIndex = 9;
+            this.pageCount.Text = "?";
+            // 
+            // currentPage
+            // 
+            this.currentPage.AutoSize = true;
+            this.currentPage.BackColor = System.Drawing.Color.White;
+            this.currentPage.Font = new System.Drawing.Font("Pyidaungsu", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.currentPage.Location = new System.Drawing.Point(852, 688);
+            this.currentPage.Name = "currentPage";
+            this.currentPage.Size = new System.Drawing.Size(17, 24);
+            this.currentPage.TabIndex = 10;
+            this.currentPage.Text = "1";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.White;
+            this.label9.Font = new System.Drawing.Font("Pyidaungsu", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(899, 688);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(22, 24);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "of";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(4F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1372, 802);
+            this.ClientSize = new System.Drawing.Size(1372, 855);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.currentPage);
+            this.Controls.Add(this.pageCount);
+            this.Controls.Add(this.prevButton);
+            this.Controls.Add(this.nextButton);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.label6);
@@ -581,6 +660,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Remark;
         private System.Windows.Forms.DataGridViewTextBoxColumn gimage;
         private System.Windows.Forms.DataGridViewTextBoxColumn dobstudent;
+        private System.Windows.Forms.Button nextButton;
+        private System.Windows.Forms.Button prevButton;
+        private System.Windows.Forms.Label pageCount;
+        private System.Windows.Forms.Label currentPage;
+        private System.Windows.Forms.Label label9;
     }
 }
 

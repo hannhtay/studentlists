@@ -20,7 +20,7 @@ namespace StudentList
         public string StudentFather { get; set; }
         public string StudentBOD { get; set; }
         public string StudentNRC { get; set; }
-        public int StudentGender { get; set; }
+        public string StudentGender { get; set; }
         public string StudentClass { get; set; }
         public string StudentRemark { get; set; }
         public int StudentId { get; set; }
@@ -30,22 +30,22 @@ namespace StudentList
         static string myconnstring = ConfigurationManager.ConnectionStrings["connstring"].ConnectionString;
        
         //show all students
-        public DataTable Students()
+        public DataTable Students(int getrow, int page)
         {
+            int offset = (page - 1) * getrow;
             SqlConnection conn = new SqlConnection(myconnstring);
             DataTable dt = new DataTable();
             try
             {
-                string sql = "SELECT * FROM Students ORDER BY id DESC";
+                string sql = "SELECT *  FROM Students ORDER BY id DESC OFFSET @offset ROWS FETCH NEXT @countnumber ROWS ONLY";
+
                 SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@offset", offset);
+                cmd.Parameters.AddWithValue("@countnumber", getrow);
 
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 conn.Open();
                 adapter.Fill(dt);
-            }
-            catch (Exception ex)
-            {
-
             }
             finally
             {

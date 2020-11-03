@@ -383,7 +383,7 @@ namespace StudentList
 
         private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
         {
-            e.Graphics.DrawImage(bm, Brushes.Black, new Point(10, 10));
+            e.Graphics.DrawImage(bm, new Point(10, 10));
         }
     }
 }
